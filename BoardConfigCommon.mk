@@ -33,6 +33,7 @@ USE_OPENGL_RENDERER    := true
 BOARD_EGL_CFG          := device/acer/t20-common/prebuilt/etc/egl.cfg
 BOARD_USE_SKIA_LCDTEXT := true
 BOARD_NO_ALLOW_DEQUEUE_CURRENT_BUFFER := true
+BOARD_USE_SKIA_LCDTEXT := true
 
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/class/android_usb/f_mass_storage/lun/file"
 
