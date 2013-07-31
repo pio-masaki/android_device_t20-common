@@ -18,6 +18,8 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
 $(call inherit-product, device/common/gps/gps_us_supl.mk)
 
+$(call inherit-product, $(SRC_TARGET_DIR)/product/telephony.mk)
+
 DEVICE_PACKAGE_OVERLAYS := $(LOCAL_PATH)/overlay
 
 PRODUCT_PROPERTY_OVERRIDES := \
@@ -62,7 +64,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/etc/gps/gpsconfig.xml:system/etc/gps/gpsconfig.xml \
     $(LOCAL_PATH)/prebuilt/etc/bluetooth/main.conf:system/etc/bluetooth/main.conf \
     $(LOCAL_PATH)/prebuilt/etc/media_codecs.xml:system/etc/media_codecs.xml \
-    $(LOCAL_PATH)/prebuilt/etc/wifi/bcmdhd.cal:system/etc/wifi/bcmdhd.cal
+    $(LOCAL_PATH)/prebuilt/etc/wifi/bcmdhd.cal:system/etc/wifi/bcmdhd.cal \
+    $(LOCAL_PATH)/prebuilt/gsm::root/sbin/gsm \
+    $(LOCAL_PATH)/prebuilt/bin/rild:system/bin/rild \
+    $(LOCAL_PATH)/prebuilt/ril/libhuawei-ril.so:system/lib/libhuawei-ril.so
 
 # keychars/layout
 PRODUCT_COPY_FILES += \

@@ -39,8 +39,12 @@ BOARD_USES_OVERLAY := true
 
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/class/android_usb/f_mass_storage/lun/file"
 
+# Bluetooth
 BOARD_HAVE_BLUETOOTH     := true
 BOARD_HAVE_BLUETOOTH_BCM := true
+
+# RIL
+BOARD_USES_LEGACY_RIL := true
 
 BOARD_HAS_NO_SELECT_BUTTON  := true
 TARGET_USERIMAGES_USE_EXT4  := true
