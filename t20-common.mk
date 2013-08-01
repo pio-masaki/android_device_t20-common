@@ -18,8 +18,6 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
 $(call inherit-product, device/common/gps/gps_us_supl.mk)
 
-$(call inherit-product, $(SRC_TARGET_DIR)/product/telephony.mk)
-
 DEVICE_PACKAGE_OVERLAYS := $(LOCAL_PATH)/overlay
 
 PRODUCT_PROPERTY_OVERRIDES := \
@@ -35,6 +33,8 @@ PRODUCT_PROPERTY_OVERRIDES := \
 PRODUCT_PROPERTY_OVERRIDES += ro.dinfo.radio=Wifi
 
 PRODUCT_CHARACTERISTICS := tablet
+
+PRODUCT_TAGS += dalvik.gc.type-precise 
 
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory \

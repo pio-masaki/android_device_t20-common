@@ -17,10 +17,12 @@
 TARGET_BOARD_PLATFORM   := tegra
 TARGET_CPU_ABI          := armeabi-v7a
 TARGET_CPU_ABI2         := armeabi
+TARGET_ARCH             := arm
 TARGET_ARCH_VARIANT     := armv7-a
 TARGET_ARCH_VARIANT_CPU := cortex-a9
 TARGET_ARCH_VARIANT_FPU := vfpv3-d16
 TARGET_CPU_SMP          := true
+
 
 TARGET_NO_BOOTLOADER := true
 BOARD_KERNEL_CMDLINE :=
@@ -28,6 +30,8 @@ BOARD_KERNEL_BASE := 0x10000000
 BOARD_PAGE_SIZE := 0x00000800
 
 BOARD_USES_GENERIC_AUDIO := false
+BOARD_USES_ALSA_AUDIO := false
+USE_PROPRIETARY_AUDIO_EXTENSIONS := true 
 
 USE_OPENGL_RENDERER    := true
 BOARD_EGL_CFG          := device/acer/t20-common/prebuilt/etc/egl.cfg
