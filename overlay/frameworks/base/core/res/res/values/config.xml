@@ -28,9 +28,14 @@ for different hardware and product builds. -->
    <bool name="config_hasRotationLockSwitch">true</bool>
    
     <!-- Separate software navigation bar required on this device. -->             
-    <bool name="config_showNavigationBar">true</bool> 
+    <bool name="config_showNavigationBar">true</bool>
     
    <!--  Maximum number of supported users -->
-    <integer name="config_multiuserMaximumUsers">5</integer> 
-
+    <integer name="config_multiuserMaximumUsers">5</integer>
+    
+   <!-- Package name(s) containing location provider support -->
+    <string-array name="config_locationProviderPackageNames" translatable="false">
+        <item>com.android.location.fused</item>
+        <item>com.google.android.location</item>
+    </string-array>
 </resources> 
