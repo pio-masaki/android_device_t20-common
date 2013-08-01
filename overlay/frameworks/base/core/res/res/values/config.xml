@@ -26,5 +26,8 @@ for different hardware and product builds. -->
     
    <!-- Device has a h/w rotation lock switch - this somehow got lost when bringing back from the fire-->
    <bool name="config_hasRotationLockSwitch">true</bool>
+   
+   <!-- Diable lockscreen rotation by default -->
+   <bool name="config_enableLockScreenRotation">true</bool> 
 
 </resources> 
