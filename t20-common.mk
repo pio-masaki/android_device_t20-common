@@ -41,7 +41,8 @@ PRODUCT_PACKAGES += \
     audio.a2dp.default \
     libaudioutils \
     libtinyalsa \
-    audio.primary.tegra
+    audio.primary.tegra \
+    Torch
 
 # Hardware permissions
 PRODUCT_COPY_FILES += \
