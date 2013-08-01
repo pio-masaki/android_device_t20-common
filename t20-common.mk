@@ -27,7 +27,8 @@ PRODUCT_PROPERTY_OVERRIDES := \
     dalvik.vm.heapstartsize=5m \
     dalvik.vm.heapgrowthlimit=48m \
     dalvik.vm.heapsize=256m \
-    persist.sys.usb.config=mtp,adb
+    persist.sys.usb.config=mtp,adb \
+    ro.opengles.surface.rgb565=true
 
 
 PRODUCT_PROPERTY_OVERRIDES += ro.dinfo.radio=Wifi
