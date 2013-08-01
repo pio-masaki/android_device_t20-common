@@ -2,16 +2,19 @@ on early-init
     mount debugfs debugfs /sys/kernel/debug
 
     export EXTERNAL_STORAGE /storage/sdcard
-    mkdir /storage/sdcard 0000 system system
-    # for backwards compatibility
-    symlink /storage/sdcard /sdcard
-
     export SECONDARY_STORAGE /storage/external_sd
-    export SECOND_VOLUME_STORAGE /storage/external_sd
-    mkdir /storage/external_sd 0000 system system
+    mkdir /storage 0050 system sdcard_r
+    mkdir /storage/sdcard 0000 system system
+    symlink /storage/sdcard0 /sdcard
+    symlink /storage/sdcard0 /mnt/sdcard
 
-    export THIRD_VOLUME_STORAGE /storage/usb_storage
-    mkdir /storage/usb_storage 0000 system system
+    # make the pathes for the external media mounts
+    mkdir /storage/external_sd 0000 system system
+    mkdir /storage/usbdisk0 0755 system system
+    symlink /storage/external_sd /external_sd
+    symlink /storage/external_sd /mnt/external_sd
+    symlink /storage/usbdisk0 /mnt/usbdisk0
+    symlink /storage/usbdisk0 /usbdisk0
 
 on fs
     mount ext4 /dev/block/mmcblk0p3 /system wait ro
