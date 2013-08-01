@@ -65,6 +65,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/etc/bluetooth/main.conf:system/etc/bluetooth/main.conf \
     $(LOCAL_PATH)/prebuilt/etc/media_codecs.xml:system/etc/media_codecs.xml \
     $(LOCAL_PATH)/prebuilt/etc/wifi/bcmdhd.cal:system/etc/wifi/bcmdhd.cal \
+    $(LOCAL_PATH)/prebuilt/etc/bluetooth/bdaddr:system/etc/bluetooth/bdaddr \
     $(LOCAL_PATH)/prebuilt/gsm::root/sbin/gsm
     
 # Huawei_3GUSB
