@@ -43,6 +43,7 @@ PRODUCT_PACKAGES += \
     libaudioutils \
     libtinyalsa \
     audio.primary.tegra \
+    libnetcmdiface \
     Torch
 
 # Hardware permissions
