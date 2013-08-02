@@ -2,10 +2,9 @@ on early-init
     mount debugfs debugfs /sys/kernel/debug
 
 on init
-    # See storage config details at http://source.android.com/tech/storage/
     mkdir /mnt/shell/emulated 0700 shell shell
+    mkdir /storage 0550 system sdcard_r
     mkdir /storage/emulated 0555 root root
-
     export EXTERNAL_STORAGE /storage/emulated/legacy
     export SECONDARY_STORAGE /storage/sdcard1
     export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
@@ -19,37 +18,35 @@ on init
 
     # make the pathes for the external media mounts
     mkdir /storage/sdcard1 0000 system system
+    mkdir /storage/sdcard2 0000 system system
     mkdir /storage/usbdisk0 0000 system system
+    mkdir /storage/usbdisk1 0000 system system
 
-    symlink /storage/sdcard1 /external_sd
-    symlink /storage/sdcard1 /mnt/external_sd
-    symlink /storage/usbdisk0 /usb_storage
-    symlink /storage/usbdisk0 /mnt/usb_storage
-
-    # Create mountpoint so Dalvik can mark as slave in zygotes.
-    mount tmpfs tmpfs /storage mode=0050,uid=0,gid=1028
+    symlink /storage/sdcard1 /extSdCard
+    symlink /storage/sdcard1 /mnt/extSdCard
  
 on fs
-    mount ext4 /dev/block/mmcblk0p3 /system wait ro
+    mount ext4 /dev/block/mmcblk0p3 /system wait rw
     setprop ro.crypto.tmpfs_options size=128m,mode=0771,uid=1000,gid=1000
     mount ext4 /dev/block/mmcblk0p8 /data wait noatime nosuid nodev
     mount ext4 /dev/block/mmcblk0p4 /cache wait noatime nosuid nodev
 
-    # virtual sdcard daemon running as media_rw (1023)
-    service sdcard /system/bin/sdcard /data/media /mnt/shell/emulated 1023 1023
+# create virtual SD card at /mnt/sdcard, based on the /data/media directory
+# deamon will drop to user/group system/media_rw after initializing
+# underlying files in /data/media wil be created with user and group media_rw (1023)
+service sdcard /system/bin/sdcard /data/media /mnt/shell/emulated 1023 1023
     class late_start
  
 on post-fs-data
-    mkdir /data/media 0770 media_rw media_rw 
     mkdir /data/misc/wifi 0770 wifi wifi
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
     mkdir /data/misc/dhcp 0770 dhcp dhcp
     chown dhcp dhcp /data/misc/dhcp
 
-    mkdir /data/gps 700 gps system
-    chown gps system /data/gps
- 
+    mkdir /data/misc/wminput 0776 system system
+
     # we will remap this as /mnt/sdcard with the sdcard fuse tool
+    mkdir /data/media 0770 media_rw media_rw
     chown media_rw media_rw /data/media
 
     # Set indication (checked by vold) that we have finished this action
@@ -137,9 +134,9 @@ on boot
 
 # RIL
 # Define TCP buffer sizes for hspa networks
-#   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax
-    setprop net.tcp.buffersize.umts  4096,87380,524288,4096,87380,524288
-    setprop net.tcp.buffersize.hspa  4096,87380,524288,4096,87380,524288
+# ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax
+    setprop net.tcp.buffersize.umts 4096,87380,524288,4096,87380,524288
+    setprop net.tcp.buffersize.hspa 4096,87380,524288,4096,87380,524288
     setprop net.tcp.buffersize.hsdpa 4096,87380,524288,4096,87380,524288
     setprop net.tcp.buffersize.hsupa 4096,87380,524288,4096,87380,524288
  
@@ -207,12 +204,12 @@ service iprenew_p2p /system/bin/dhcpcd -n
 
 #BCM
 #service hciattach /system/bin/brcm_patchram_plus --enable_hci \
-#    --baudrate 3000000 --patchram /etc/firmware/bcm4329.hcd \
-#    --enable_lpm /dev/ttyHS2
-#    class main
-#    user bluetooth
-#    group bluetooth net_bt_admin
-#    disabled
+# --baudrate 3000000 --patchram /etc/firmware/bcm4329.hcd \
+# --enable_lpm /dev/ttyHS2
+# class main
+# user bluetooth
+# group bluetooth net_bt_admin
+# disabled
 
 # Start GPS daemon
 on boot
@@ -221,7 +218,7 @@ on boot
   write /sys/class/gpio/gpio203/direction out
   chmod 0660 /sys/class/gpio/gpio203/value
   chown gps gps /sys/class/gpio/gpio203/value
-  chown gps gps /sys/class/gpio/gpio203/value 
+  chown gps gps /sys/class/gpio/gpio203/value
 
 service gps-daemon /system/bin/glgps_nvidiaTegra2android -c /system/etc/gps/gpsconfig.xml
   class late_start
@@ -234,4 +231,5 @@ on property:init.svc.gps-daemon=running
     chown gps system /dev/socket/gps
     chmod 0660 /dev/socket/gps
  
+
 
