@@ -19,10 +19,7 @@ on early-init
     symlink /storage/usbdisk0 /mnt/usb_storage
 
 on fs
-    mount ext4 /dev/block/mmcblk0p3 /system wait ro
-    setprop ro.crypto.tmpfs_options size=128m,mode=0771,uid=1000,gid=1000
-    mount ext4 /dev/block/mmcblk0p8 /data wait noatime nosuid nodev
-    mount ext4 /dev/block/mmcblk0p4 /cache wait noatime nosuid nodev 
+    mount_all /fstab.t20
     setprop ro.crypto.fuse_sdcard true
 
 on post-fs-data
@@ -168,15 +165,18 @@ service hciattach /system/bin/brcm_patchram_plus --enable_hci \
     disabled
 
 # Start GPS daemon
-service gps-daemon /system/bin/glgps_nvidiaTegra2android -c /system/etc/gps/gpsconfig.xml
-    class late_start
-    user root
-    group root
+# updated for test in sosei try 2
+  on boot
+  service gps-daemon /system/bin/glgps_nvidiaTegra2android -c /system/etc/gps/gpsconfig.xml
+  user root
+  socket gps seqpacket 0666 root root
+  group root
+  class late_start
 
 # gps: fix permissions for jb
 on property:dev.bootcomplete=1
     chown gps system /dev/socket/gps
-    chmod 0660 /dev/socket/gps
+    chmod 777 /dev/socket/gps
 
 # Download BCM gps lto data
 service bcmgps /system/bin/logwrapper /system/bin/bcmgps
