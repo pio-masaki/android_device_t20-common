@@ -42,6 +42,10 @@ PRODUCT_PACKAGES += \
     libaudioutils \
     libtinyalsa \
     audio.primary.tegra
+    
+# ramdisk - fstab is the same for all AX0X devices
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/ramdisk/fstab.t20:root/fstab.t20
 
 # Hardware permissions
 PRODUCT_COPY_FILES += \
