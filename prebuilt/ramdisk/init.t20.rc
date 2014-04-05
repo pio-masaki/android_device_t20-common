@@ -165,18 +165,12 @@ service hciattach /system/bin/brcm_patchram_plus --enable_hci \
     disabled
 
 # Start GPS daemon
-# updated for test in sosei try 2
   on boot
   service gps-daemon /system/bin/glgps_nvidiaTegra2android -c /system/etc/gps/gpsconfig.xml
-  user root
-  socket gps seqpacket 0666 root root
-  group root
+  user gps
+  socket gps seqpacket 0666 gps system
+  group system
   class late_start
-
-# gps: fix permissions for jb
-on property:dev.bootcomplete=1
-    chown gps system /dev/socket/gps
-    chmod 777 /dev/socket/gps
 
 # Download BCM gps lto data
 service bcmgps /system/bin/logwrapper /system/bin/bcmgps
